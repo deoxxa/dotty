@@ -10,6 +10,15 @@ Overview
 Dotty makes it easy to programmatically access arbitrarily nested objects and
 their properties.
 
+
+Installation
+------------
+
+Here's a link to the [npm](https://npmjs.org/package/dotty) page. 
+
+	npm install dotty
+
+
 Usage
 -----
 

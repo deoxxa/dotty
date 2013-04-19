@@ -21,7 +21,7 @@
   "author": "Conrad Pankoff <deoxxa@fknsrs.biz> (http://www.fknsrs.biz/)",
   "license": "BSD",
   "devDependencies": {
-    "vows": "~0.6.3",
+    "vows": "~0.7.0",
     "docco": "~0.3.0"
   }
 }

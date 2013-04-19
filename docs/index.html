@@ -248,6 +248,47 @@ successfully, or <code>false</code> otherwise.</p>
             
         </li>
         
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p><code>deepKeys</code> creates a list of all possible key paths for a given object.</p>
+<p>The return value is always an array, the members of which are paths in array
+format. If you want them in dot-notation format, do something like this:</p>
+<pre><code class="lang-js">dotty.deepKeys(obj).map(function(e) {
+  return e.join(&quot;.&quot;);
+});</code></pre>
+<p><em>Note: this will probably explode on recursive objects. Be careful.</em></p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> deepKeys = module.exports.deepKeys = <span class="function"><span class="keyword">function</span> <span class="title">deepKeys</span><span class="params">(object, prefix)</span> {</span>
+  <span class="keyword">if</span> (<span class="keyword">typeof</span> prefix === <span class="string">"undefined"</span>) {
+    prefix = [];
+  }
+
+  <span class="keyword">var</span> keys = [];
+
+  <span class="keyword">for</span> (<span class="keyword">var</span> k <span class="keyword">in</span> object) {
+    <span class="keyword">if</span> (!Object.hasOwnProperty.call(object, k)) {
+      <span class="keyword">continue</span>;
+    }
+
+    keys.push(prefix.concat([k]));
+
+    <span class="keyword">if</span> (<span class="keyword">typeof</span> object[k] === <span class="string">"object"</span> &amp;&amp; object[k] !== <span class="literal">null</span>) {
+      keys = keys.concat(deepKeys(object[k], prefix.concat([k])));
+    }
+  }
+
+  <span class="keyword">return</span> keys;
+};</pre></div></div>
+            
+        </li>
+        
     </ul>
   </div>
 </body>

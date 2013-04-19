@@ -57,6 +57,9 @@ console.log(dotty.search(object, "a.*.x"));
 console.log(dotty.search(object, ["a", "*", "x"]));
 console.log(dotty.search(object, ["a", "*", /..+/]));
 
+console.log(dotty.remove(object, "a.b.x"));
+console.log(dotty.remove(object, "a.b.y"));
+
 console.log(dotty.deepKeys(object));
 console.log(dotty.deepKeys(object).map(function(e) { return e.join("."); }));
 

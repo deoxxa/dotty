@@ -1,5 +1,4 @@
-[![build status](https://secure.travis-ci.org/deoxxa/dotty.png)](http://travis-ci.org/deoxxa/dotty)
-Dotty
+Dotty [![build status](https://secure.travis-ci.org/deoxxa/dotty.png)](http://travis-ci.org/deoxxa/dotty)
 =====
 
 Access properties of nested objects using dot-path notation.

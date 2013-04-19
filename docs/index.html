@@ -238,6 +238,10 @@ successfully, or <code>false</code> otherwise.</p>
   }
 
   <span class="keyword">if</span> (path.length === <span class="number">0</span>) {
+    <span class="keyword">if</span> (!Object.hasOwnProperty.call(object, key)) {
+      <span class="keyword">return</span> <span class="literal">false</span>;
+    }
+
     <span class="keyword">delete</span> object[key];
 
     <span class="keyword">return</span> <span class="literal">true</span>;

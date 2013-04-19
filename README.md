@@ -1,3 +1,4 @@
+[![build status](https://secure.travis-ci.org/deoxxa/dotty.png)](http://travis-ci.org/deoxxa/dotty)
 Dotty
 =====
 

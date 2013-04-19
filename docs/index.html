@@ -130,6 +130,33 @@ successfully, or <code>false</code> otherwise.</p>             </td>            
 
     <span class="k">return</span> <span class="nx">put</span><span class="p">(</span><span class="nx">object</span><span class="p">[</span><span class="nx">key</span><span class="p">],</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
   <span class="p">}</span>
+<span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p><code>remove</code> is like <code>put</code> in reverse!</p>
+
+<p>The return value is <code>true</code> in the case that the value existed and was removed
+successfully, or <code>false</code> otherwise.</p>             </td>             <td class="code">               <div class="highlight"><pre><span class="kd">var</span> <span class="nx">remove</span> <span class="o">=</span> <span class="nx">module</span><span class="p">.</span><span class="nx">exports</span><span class="p">.</span><span class="nx">remove</span> <span class="o">=</span> <span class="kd">function</span> <span class="nx">remove</span><span class="p">(</span><span class="nx">object</span><span class="p">,</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">path</span> <span class="o">===</span> <span class="s2">&quot;string&quot;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">path</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">);</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="p">(</span><span class="nx">path</span> <span class="k">instanceof</span> <span class="nb">Array</span><span class="p">)</span> <span class="o">||</span> <span class="nx">path</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="p">}</span>
+  
+  <span class="nx">path</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">slice</span><span class="p">();</span>
+
+  <span class="kd">var</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">path</span><span class="p">.</span><span class="nx">shift</span><span class="p">();</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="k">typeof</span> <span class="nx">object</span> <span class="o">!==</span> <span class="s2">&quot;object&quot;</span> <span class="o">||</span> <span class="nx">object</span> <span class="o">===</span> <span class="kc">null</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="nx">path</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">delete</span> <span class="nx">object</span><span class="p">[</span><span class="nx">key</span><span class="p">];</span>
+
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">remove</span><span class="p">(</span><span class="nx">object</span><span class="p">[</span><span class="nx">key</span><span class="p">],</span> <span class="nx">path</span><span class="p">,</span> <span class="nx">value</span><span class="p">);</span>
+  <span class="p">}</span>
 <span class="p">};</span>
 
 </pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

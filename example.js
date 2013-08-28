@@ -34,6 +34,7 @@ console.log(dotty.remove(object, "a.b.x"));
 console.log(dotty.remove(object, "a.b.y"));
 
 console.log(dotty.deepKeys(object));
-console.log(dotty.deepKeys(object).map(function(e) { return e.join("."); }));
+console.log(dotty.deepKeys(object, {leavesOnly: true}));
+console.log(dotty.deepKeys(object, {leavesOnly: true, asStrings: true}));
 
 console.log(object);

@@ -269,7 +269,7 @@ format. If you want them in dot-notation format, do something like this:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> deepKeys = module.exports.deepKeys = <span class="function"><span class="keyword">function</span> <span class="title">deepKeys</span><span class="params">(object, prefix)</span> {</span>
+            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> deepKeys = module.exports.deepKeys = <span class="function"><span class="keyword">function</span> <span class="title">deepKeys</span><span class="params">(object, prefix, leavesOnly, asStrings)</span> {</span>
   <span class="keyword">if</span> (<span class="keyword">typeof</span> prefix === <span class="string">"undefined"</span>) {
     prefix = [];
   }
@@ -281,11 +281,17 @@ format. If you want them in dot-notation format, do something like this:</p>
       <span class="keyword">continue</span>;
     }
 
-    keys.push(prefix.concat([k]));
+    <span class="keyword">if</span> (!leavesOnly || <span class="keyword">typeof</span> object[k] !== <span class="string">"object"</span>) {
+      keys.push(prefix.concat([k]));
+    }
 
     <span class="keyword">if</span> (<span class="keyword">typeof</span> object[k] === <span class="string">"object"</span> &amp;&amp; object[k] !== <span class="literal">null</span>) {
       keys = keys.concat(deepKeys(object[k], prefix.concat([k])));
     }
+  }
+
+  <span class="keyword">if</span> (asStrings) {
+    keys = keys.map(<span class="keyword">function</span>(e) { <span class="keyword">return</span> e.join(<span class="string">"."</span>); });
   }
 
   <span class="keyword">return</span> keys;

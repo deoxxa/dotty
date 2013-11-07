@@ -29,15 +29,10 @@
               </div>
               <p>Dotty makes it easy to programmatically access arbitrarily nested objects and
 their properties.</p>
-<p><code>object</code> is an object, <code>path</code> is the path to the property you want to check
-for existence of.</p>
-<p><code>path</code> can be provided as either a <code>&quot;string.separated.with.dots&quot;</code> or as
-<code>[&quot;an&quot;, &quot;array&quot;]</code>.</p>
-<p>Returns <code>true</code> if the path can be completely resolved, <code>false</code> otherwise.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> exists = module.exports.exists = <span class="function"><span class="keyword">function</span> <span class="title">exists</span><span class="params">(object, path)</span> {</span>
+            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> parts = module.exports.parts = <span class="function"><span class="keyword">function</span> <span class="params">(path)</span> {</span>
   <span class="keyword">if</span> (<span class="keyword">typeof</span> path === <span class="string">"string"</span>) {
     path = path.split(<span class="string">"."</span>);
   }
@@ -47,6 +42,30 @@ for existence of.</p>
   }
 
   path = path.slice();
+
+  <span class="keyword">return</span> path;
+}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p><code>object</code> is an object, <code>path</code> is the path to the property you want to check
+for existence of.</p>
+<p><code>path</code> can be provided as either a <code>&quot;string.separated.with.dots&quot;</code> or as
+<code>[&quot;an&quot;, &quot;array&quot;]</code>.</p>
+<p>Returns <code>true</code> if the path can be completely resolved, <code>false</code> otherwise.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> exists = module.exports.exists = <span class="function"><span class="keyword">function</span> <span class="title">exists</span><span class="params">(object, path)</span> {</span>
+
+  path = parts(path);
 
   <span class="keyword">var</span> key = path.shift();
 
@@ -64,31 +83,24 @@ for existence of.</p>
         </li>
         
         
-        <li id="section-2">
+        <li id="section-3">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-2">&#182;</a>
+                <a class="pilcrow" href="#section-3">&#182;</a>
               </div>
               <p>These arguments are the same as those for <code>exists</code>.</p>
 <p>The return value, however, is the property you&#39;re trying to access, or
 <code>undefined</code> if it can&#39;t be found. This means you won&#39;t be able to tell
-the difference between an unresolved path and an undefined property, so you 
+the difference between an unresolved path and an undefined property, so you
 should not use <code>get</code> to check for the existence of a property. Use <code>exists</code>
 instead.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="keyword">var</span> get = module.exports.get = <span class="function"><span class="keyword">function</span> <span class="title">get</span><span class="params">(object, path)</span> {</span>
-  <span class="keyword">if</span> (<span class="keyword">typeof</span> path === <span class="string">"string"</span>) {
-    path = path.split(<span class="string">"."</span>);
-  }
 
-  <span class="keyword">if</span> (!(path <span class="keyword">instanceof</span> Array) || path.length === <span class="number">0</span>) {
-    <span class="keyword">return</span>;
-  }
-
-  path = path.slice();
+  path = parts(path);
 
   <span class="keyword">var</span> key = path.shift();
 
@@ -108,11 +120,11 @@ instead.</p>
         </li>
         
         
-        <li id="section-3">
+        <li id="section-4">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-3">&#182;</a>
+                <a class="pilcrow" href="#section-4">&#182;</a>
               </div>
               <p>Arguments are similar to <code>exists</code> and <code>get</code>, with the exception that path
 components are regexes with some special cases. If a path component is <code>&quot;*&quot;</code>
@@ -123,15 +135,8 @@ specified criterion. If none match, an empty array will be returned.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="keyword">var</span> search = module.exports.search = <span class="function"><span class="keyword">function</span> <span class="title">search</span><span class="params">(object, path)</span> {</span>
-  <span class="keyword">if</span> (<span class="keyword">typeof</span> path === <span class="string">"string"</span>) {
-    path = path.split(<span class="string">"."</span>);
-  }
 
-  <span class="keyword">if</span> (!(path <span class="keyword">instanceof</span> Array) || path.length === <span class="number">0</span>) {
-    <span class="keyword">return</span>;
-  }
-
-  path = path.slice();
+  path = parts(path);
 
   <span class="keyword">var</span> key = path.shift();
 
@@ -148,20 +153,20 @@ specified criterion. If none match, an empty array will be returned.</p>
   }
 
   <span class="keyword">if</span> (path.length === <span class="number">0</span>) {
-    <span class="keyword">return</span> Object.keys(object).filter(key.test.bind(key)).map(<span class="keyword">function</span>(k) { <span class="keyword">return</span> object[k]; });
+    <span class="keyword">return</span> Object.keys(object).filter(key.test.bind(key)).map(<span class="function"><span class="keyword">function</span><span class="params">(k)</span> {</span> <span class="keyword">return</span> object[k]; });
   } <span class="keyword">else</span> {
-    <span class="keyword">return</span> Array.prototype.concat.apply([], Object.keys(object).filter(key.test.bind(key)).map(<span class="keyword">function</span>(k) { <span class="keyword">return</span> search(object[k], path); }));
+    <span class="keyword">return</span> Array.prototype.concat.apply([], Object.keys(object).filter(key.test.bind(key)).map(<span class="function"><span class="keyword">function</span><span class="params">(k)</span> {</span> <span class="keyword">return</span> search(object[k], path); }));
   }
 };</pre></div></div>
             
         </li>
         
         
-        <li id="section-4">
+        <li id="section-5">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-4">&#182;</a>
+                <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
               <p>The first two arguments for <code>put</code> are the same as <code>exists</code> and <code>get</code>.</p>
 <p>The third argument is a value to <code>put</code> at the <code>path</code> of the <code>object</code>.
@@ -174,15 +179,8 @@ successfully, or <code>false</code> otherwise.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="keyword">var</span> put = module.exports.put = <span class="function"><span class="keyword">function</span> <span class="title">put</span><span class="params">(object, path, value)</span> {</span>
-  <span class="keyword">if</span> (<span class="keyword">typeof</span> path === <span class="string">"string"</span>) {
-    path = path.split(<span class="string">"."</span>);
-  }
 
-  <span class="keyword">if</span> (!(path <span class="keyword">instanceof</span> Array) || path.length === <span class="number">0</span>) {
-    <span class="keyword">return</span> <span class="literal">false</span>;
-  }
-  
-  path = path.slice();
+  path = parts(path);
 
   <span class="keyword">var</span> key = path.shift();
 
@@ -208,11 +206,11 @@ successfully, or <code>false</code> otherwise.</p>
         </li>
         
         
-        <li id="section-5">
+        <li id="section-6">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-5">&#182;</a>
+                <a class="pilcrow" href="#section-6">&#182;</a>
               </div>
               <p><code>remove</code> is like <code>put</code> in reverse!</p>
 <p>The return value is <code>true</code> in the case that the value existed and was removed
@@ -221,15 +219,8 @@ successfully, or <code>false</code> otherwise.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="keyword">var</span> remove = module.exports.remove = <span class="function"><span class="keyword">function</span> <span class="title">remove</span><span class="params">(object, path, value)</span> {</span>
-  <span class="keyword">if</span> (<span class="keyword">typeof</span> path === <span class="string">"string"</span>) {
-    path = path.split(<span class="string">"."</span>);
-  }
 
-  <span class="keyword">if</span> (!(path <span class="keyword">instanceof</span> Array) || path.length === <span class="number">0</span>) {
-    <span class="keyword">return</span> <span class="literal">false</span>;
-  }
-  
-  path = path.slice();
+  path = parts(path);
 
   <span class="keyword">var</span> key = path.shift();
 
@@ -253,11 +244,11 @@ successfully, or <code>false</code> otherwise.</p>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p><code>deepKeys</code> creates a list of all possible key paths for a given object.</p>
 <p>The return value is always an array, the members of which are paths in array
@@ -269,7 +260,9 @@ format. If you want them in dot-notation format, do something like this:</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> deepKeys = module.exports.deepKeys = <span class="function"><span class="keyword">function</span> <span class="title">deepKeys</span><span class="params">(object, prefix, leavesOnly, asStrings)</span> {</span>
+            <div class="content"><div class='highlight'><pre><span class="keyword">var</span> deepKeys = module.exports.deepKeys = <span class="function"><span class="keyword">function</span> <span class="title">deepKeys</span><span class="params">(object, options, prefix)</span> {</span>
+  options = options || {};
+
   <span class="keyword">if</span> (<span class="keyword">typeof</span> prefix === <span class="string">"undefined"</span>) {
     prefix = [];
   }
@@ -281,17 +274,17 @@ format. If you want them in dot-notation format, do something like this:</p>
       <span class="keyword">continue</span>;
     }
 
-    <span class="keyword">if</span> (!leavesOnly || <span class="keyword">typeof</span> object[k] !== <span class="string">"object"</span>) {
+    <span class="keyword">if</span> (!options.leavesOnly || <span class="keyword">typeof</span> object[k] !== <span class="string">"object"</span>) {
       keys.push(prefix.concat([k]));
     }
 
     <span class="keyword">if</span> (<span class="keyword">typeof</span> object[k] === <span class="string">"object"</span> &amp;&amp; object[k] !== <span class="literal">null</span>) {
-      keys = keys.concat(deepKeys(object[k], prefix.concat([k])));
+      keys = keys.concat(deepKeys(object[k], {leavesOnly: options.leavesOnly}, prefix.concat([k])));
     }
   }
 
-  <span class="keyword">if</span> (asStrings) {
-    keys = keys.map(<span class="keyword">function</span>(e) { <span class="keyword">return</span> e.join(<span class="string">"."</span>); });
+  <span class="keyword">if</span> (options.asStrings) {
+    keys = keys.map(<span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span> <span class="keyword">return</span> e.join(<span class="string">"."</span>); });
   }
 
   <span class="keyword">return</span> keys;

@@ -11,6 +11,10 @@ var object = {
   },
 };
 
+console.log(dotty.parts("a")); // ['a']
+console.log(dotty.parts("a.b")); // ['a', 'b']
+console.log(dotty.parts({})); // false
+
 console.log(dotty.exists(object, "a.b.x")); // true
 console.log(dotty.exists(object, ["a", "b", "x"])); // true
 console.log(dotty.exists(object, "a.b.z")); // false

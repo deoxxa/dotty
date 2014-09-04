@@ -16,6 +16,12 @@ vows.describe("get").addBatch({
         assert.equal(res, "b");
       },
     },
+    "as a bindable arguments object": {
+      topic: dotty.get.bind(null, {"a": "b"})(["a"]),
+      "should return the correct value": function(res) {
+        assert.equal(res, "b");
+      },
+    },
   },
   "A two-level path": {
     "as a string": {
@@ -30,6 +36,12 @@ vows.describe("get").addBatch({
         assert.equal(res, "c");
       },
     },
+    "as a bindable arguments object": {
+      topic: dotty.get.bind(null, {"a": {"b": "c"}}, ["a"])("b"),
+      "should return the correct value": function (res) {
+        assert.equal(res, "c");
+      },
+    },
   },
   "An unresolved path": {
     "as a string": {
@@ -40,6 +52,12 @@ vows.describe("get").addBatch({
     },
     "as an array": {
       topic: dotty.get({"a": {"b": "c"}}, ["a", "x"]),
+      "should return undefined": function(res) {
+        assert.isUndefined(res);
+      },
+    },
+    "as a bindable arguments object": {
+      topic: dotty.get.bind(null, {"a": {"b": "c"}}, ["a"])(["x"]),
       "should return undefined": function(res) {
         assert.isUndefined(res);
       },
@@ -58,5 +76,13 @@ vows.describe("get").addBatch({
         assert.isUndefined(res);
       },
     },
+    "as a bindable arguments object": {
+      topic: dotty.get.bind(null, {"a": {"b": undefined}}, "a")
+                      .bind(null,"b")
+                      .call(),
+      "should return undefined": function (res) {
+        assert.isUndefined(res);
+      }
+    }
   },
 }).export(module);

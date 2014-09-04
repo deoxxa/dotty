@@ -1,76 +1,6 @@
-Dotty [![build status](https://secure.travis-ci.org/deoxxa/dotty.png)](http://travis-ci.org/deoxxa/dotty)
-=====
+// Now Dotty Support BINDING and Currying
+var dotty = require('./lib/index');
 
-Access properties of nested objects using dot-path notation.
-
-Overview
---------
-
-Dotty makes it easy to programmatically access arbitrarily nested objects and
-their properties.
-
-
-Installation
-------------
-
-Here's a link to the [npm](https://npmjs.org/package/dotty) page. 
-
-	npm install dotty
-
-
-Usage
------
-
-Also see the [documentation](http://deoxxa.github.com/dotty/docs/) and
-[example](example.js).
-
-```javascript
-var dotty = require("dotty");
-
-var object = {
-  a: {
-    b: {
-      x: "y",
-    },
-    c: {
-      x: "z",
-    },
-  },
-};
-
-console.log(dotty.exists(object, "a.b.x")); // true
-console.log(dotty.exists(object, ["a", "b", "x"])); // true
-console.log(dotty.exists(object, "a.b.z")); // false
-console.log(dotty.exists(object, ["a", "b", "z"])); // false
-
-console.log(dotty.get(object, "a.b.x")); // "y"
-console.log(dotty.get(object, ["a", "b", "x"])); // "y"
-console.log(dotty.get(object, "a.b.z")); // undefined
-console.log(dotty.get(object, ["a", "b", "z"])); // undefine
-
-dotty.put(object, "a.b.hello", "hi");
-dotty.put(object, ["a", "c", "yo"], "sup");
-
-console.log(dotty.search(object, "a.b.*"));
-console.log(dotty.search(object, ["a", "b", "*"]));
-console.log(dotty.search(object, "a.*.x"));
-console.log(dotty.search(object, ["a", "*", "x"]));
-console.log(dotty.search(object, ["a", "*", /..+/]));
-
-console.log(dotty.remove(object, "a.b.x"));
-console.log(dotty.remove(object, "a.b.y"));
-
-console.log(dotty.deepKeys(object));
-console.log(dotty.deepKeys(object, {leavesOnly: true}));
-console.log(dotty.deepKeys(object, {leavesOnly: true, asStrings: true}));
-
-console.log(object);
-```
-
-Binding and Currying
-----
-- Note please read below for the one Caveat of this new feature, which affects put.
-```javascript
 var obj = 
 {
   user: {
@@ -91,15 +21,12 @@ var user = dotty.get.bind(null, obj, ['user']);
 
 var name
 // name can either inherit from user, or from obj lets see both in action
-
 name = user.bind(null, ['name']);
-
 console.log('Curried from user object')
 console.log(name('primary'));
 
 console.log('Curried from top level object');
 name = dotty.get.bind(null, obj, ['user'], 'name');
-
 console.log(name('primary'));
 console.log(name('surname'));
 console.log('Accessed via return name as an object and just accessing its properties.');
@@ -112,7 +39,6 @@ console.log('Curry from top level object');
 var city = dotty.get.bind(null, obj)
                 .bind(null, 'user.location')
                 .bind(null, 'city');
-
 // Nottice we used 3 binds, this does not really matter, it could have been one, it is just to prove the point of currying.
 
 console.log('My city is ' + city() );
@@ -137,17 +63,3 @@ console.log(dotty.get(obj1, 'a', 'b', 'c'));
 // output: ['d', 'e']
 // Thus this is essentially equal to
 obj1['a']['b']['c'] = ['d', 'e'];
-
-```
-
-License
--------
-
-3-clause BSD. A copy is included with the source.
-
-Contact
--------
-
-* GitHub ([http://github.com/deoxxa](deoxxa))
-* Twitter ([http://twitter.com/deoxxa](@deoxxa))
-* Email ([mailto:deoxxa@fknsrs.biz](deoxxa@fknsrs.biz))

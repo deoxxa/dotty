@@ -16,6 +16,12 @@ vows.describe("remove").addBatch({
         assert.isUndefined(res.a);
       },
     },
+    "as a bindable arguments object": {
+      topic: (function () { var x = {a: 1}; dotty.remove.bind(null, x, "a")(); return x; }()),
+      "should remove the property": function (res) {
+        assert.isUndefined(res.a);
+      },
+    },
   },
   "A two-level path": {
     "as a string": {
@@ -30,6 +36,12 @@ vows.describe("remove").addBatch({
         assert.isUndefined(res.a.b);
       },
     },
+    "as a bindable arguments object": {
+      topic: (function () { var x = {a: {b: 1}}; dotty.remove.bind(null, x, ["a"])(["b"]); return x; }()),
+      "should remove the property": function (res) {
+        assert.isUndefined(res.a.b);
+      },
+    },
   },
   "An interrupted path": {
     "as a string": {
@@ -41,6 +53,12 @@ vows.describe("remove").addBatch({
     "as an array": {
       topic: (function() { var x = {a: 1}; return dotty.remove(x, ["a", "b"]); }()),
       "should return false": function(res) {
+        assert.isFalse(res);
+      },
+    },
+    "as a bindable arguments object": {
+      topic: (function () { var x = {a: 1}; return dotty.remove.bind(null, x).bind("a")("b")}()),
+      "should return false": function (res) {
         assert.isFalse(res);
       },
     },

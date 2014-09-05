@@ -1,4 +1,7 @@
-Dotty [![build status](https://secure.travis-ci.org/deoxxa/dotty.png)](http://travis-ci.org/deoxxa/dotty)
+(MAINTAINED Version)
+* note: After Dotty fell into the hole of forgotten projects, I have uploaded this module. I will work to get the current pull requests merged into my branch as well as improve any existing functionality as best I can without breaking backwards compatibility with Dotty.
+
+Dotty (Maintained as "dotty-bindable" on NPM) [![build status](https://secure.travis-ci.org/miketheprogrammer/dotty.png)](http://travis-ci.org/miketheprogrammer/dotty)
 =====
 
 Access properties of nested objects using dot-path notation.

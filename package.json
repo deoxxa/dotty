@@ -1,7 +1,7 @@
 {
-  "name": "dotty",
-  "version": "0.0.2",
-  "description": "Access properties of nested objects using dot-path notation",
+  "name": "dotty-bindable",
+  "version": "0.1.0",
+  "description": "(Maintained fork of Dotty) Access properties of nested objects using dot-path notation",
   "main": "lib/index.js",
   "scripts": {
     "test": "vows",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/deoxxa/dotty.git"
+    "url": "git://github.com/miketheprogrammer/dotty.git"
   },
   "keywords": [
     "object",
@@ -18,7 +18,8 @@
     "path",
     "mongodb"
   ],
-  "author": "Conrad Pankoff <deoxxa@fknsrs.biz> (http://www.fknsrs.biz/)",
+  "author": "Michael Hernandez <michael.hernandez1988@gmail.com> ( http://miketheprogrammer.com )",
+  "author.old": "Conrad Pankoff <deoxxa@fknsrs.biz> (http://www.fknsrs.biz/)",
   "license": "BSD",
   "devDependencies": {
     "vows": "~0.7.0",

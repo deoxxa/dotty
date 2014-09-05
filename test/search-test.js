@@ -40,6 +40,19 @@ vows.describe("search").addBatch({
         assert.equal(res[0], "b");
       },
     },
+    "as a bindable arguments object": {
+      topic: dotty.search.bind(null, {"a": "b"})
+                         .call(null, [/a/]),
+      "should return an array": function(res) {
+        assert.isArray(res);
+      },
+      "should return one value": function(res) {
+        assert.equal(res.length, 1);
+      },
+      "should return the correct value": function(res) {
+        assert.equal(res[0], "b");
+      },
+    },
   },
   "A two-level path": {
     "as a string": {
@@ -68,6 +81,20 @@ vows.describe("search").addBatch({
     },
     "as an array with regexes": {
       topic: dotty.search({"a": {"b": "c"}}, [/a/, /b/]),
+      "should return an array": function(res) {
+        assert.isArray(res);
+      },
+      "should return one value": function(res) {
+        assert.equal(res.length, 1);
+      },
+      "should return the correct value": function(res) {
+        assert.equal(res[0], "c");
+      },
+    },
+    "as a bindable arguments object": {
+      topic: dotty.search.bind(null, {"a": {"b": "c"}})
+                         .bind(null, [/a/])
+                         .call(null, [/b/]),
       "should return an array": function(res) {
         assert.isArray(res);
       },
@@ -119,6 +146,22 @@ vows.describe("search").addBatch({
         assert.equal(res[1], "e");
       },
     },
+    "as a bindable arguments object": {
+      topic: dotty.search.bind(null, {"a": {"b": "c", "d": "e"}})
+                         .bind(null, /a/)
+                         .bind(null, [/.*/])
+                         .call(),
+      "should return an array": function(res) {
+        assert.isArray(res);
+      },
+      "should return two values": function(res) {
+        assert.equal(res.length, 2);
+      },
+      "should return the correct values": function(res) {
+        assert.equal(res[0], "c");
+        assert.equal(res[1], "e");
+      },
+    }
   },
   "A three-level mixed path matching two values": {
     "as a string": {
@@ -160,6 +203,23 @@ vows.describe("search").addBatch({
         assert.equal(res[1], "z");
       },
     },
+    "as a bindable arguments object": {
+      topic: dotty.search.bind(null, {"a": {"b": {"x": "y"}, "c": {"x": "z"}}})
+                         .bind(null, /a/)
+                         .bind(null, [".*"])
+                         .bind(null, [/x/])
+                         .call(),
+      "should return an array": function(res) {
+        assert.isArray(res);
+      },
+      "should return two values": function(res) {
+        assert.equal(res.length, 2);
+      },
+      "should return the correct values": function(res) {
+        assert.equal(res[0], "y");
+        assert.equal(res[1], "z");
+      },
+    },
   },
   "An unresolved path": {
     "as a string": {
@@ -182,6 +242,18 @@ vows.describe("search").addBatch({
     },
     "as an array with regexes": {
       topic: dotty.search({"a": {"b": "c"}}, [/a/, /x/]),
+      "should return an array": function(res) {
+        assert.isArray(res);
+      },
+      "should return zero values": function(res) {
+        assert.equal(res.length, 0);
+      },
+    },
+    "as a bindable arguments object": {
+      topic: dotty.search.bind(null, {"a": {"b": "c"}})
+                         .bind(null, [/a/])
+                         .bind(null, /x/)
+                         .call(),
       "should return an array": function(res) {
         assert.isArray(res);
       },

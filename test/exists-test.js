@@ -16,6 +16,12 @@ vows.describe("exists").addBatch({
         assert.isTrue(res);
       },
     },
+    "as a bindable arguments object": {
+      topic: dotty.exists.bind(null,{"a": "b"}).bind(null, "a")(),
+      "should return true": function (res) {
+        assert.isTrue(res);
+      },
+    },
   },
   "A two-level path": {
     "as a string": {
@@ -27,6 +33,12 @@ vows.describe("exists").addBatch({
     "as an array": {
       topic: dotty.exists({"a": {"b": "c"}}, ["a", "b"]),
       "should return true": function(res) {
+        assert.isTrue(res);
+      },
+    },
+    "as a bindable arguments object": {
+      topic: dotty.exists.bind(null, {"a": {"b": "c"}}, "a")("b"),
+      "should return true": function (res) {
         assert.isTrue(res);
       },
     },
@@ -44,6 +56,12 @@ vows.describe("exists").addBatch({
         assert.isFalse(res);
       },
     },
+    "as a bindable arguments object": {
+      topic: dotty.exists.bind(null, {"a": {"b": "c"}}, ["a"])(["b", "x"]),
+      "should return false": function (res) {
+        assert.isFalse(res);
+      },
+    },
   },
   "A property which is literally undefined, but with a resolved path": {
     "as a string": {
@@ -55,6 +73,12 @@ vows.describe("exists").addBatch({
     "as an array": {
       topic: dotty.exists({"a": {"b": undefined}}, ["a", "b"]),
       "should return true": function(res) {
+        assert.isTrue(res);
+      },
+    },
+    "as a bindable arguments object": {
+      topic: dotty.exists.bind(null, {"a": {"b": undefined}})("a.b"),
+      "should return true": function (res) {
         assert.isTrue(res);
       },
     },

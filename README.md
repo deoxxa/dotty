@@ -13,7 +13,7 @@ their properties.
 Installation
 ------------
 
-Here's a link to the [npm](https://npmjs.org/package/dotty) page. 
+Here's a link to the [npm](https://npmjs.org/package/dotty) page.
 
 	npm install dotty
 
@@ -46,7 +46,7 @@ console.log(dotty.exists(object, ["a", "b", "z"])); // false
 console.log(dotty.get(object, "a.b.x")); // "y"
 console.log(dotty.get(object, ["a", "b", "x"])); // "y"
 console.log(dotty.get(object, "a.b.z")); // undefined
-console.log(dotty.get(object, ["a", "b", "z"])); // undefine
+console.log(dotty.get(object, ["a", "b", "z"])); // undefined
 
 dotty.put(object, "a.b.hello", "hi");
 dotty.put(object, ["a", "c", "yo"], "sup");

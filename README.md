@@ -56,9 +56,14 @@ console.log(dotty.search(object, ["a", "b", "*"]));
 console.log(dotty.search(object, "a.*.x"));
 console.log(dotty.search(object, ["a", "*", "x"]));
 console.log(dotty.search(object, ["a", "*", /..+/]));
+console.log(dotty.search(object, 'a.b.*', function(value, parent, key){
+	parent[key] = value + '!';
+}));
 
 console.log(dotty.remove(object, "a.b.x"));
 console.log(dotty.remove(object, "a.b.y"));
+
+console.log(dotty.removeSearch(object, 'a.*.x'));
 
 console.log(dotty.deepKeys(object));
 console.log(dotty.deepKeys(object, {leavesOnly: true}));

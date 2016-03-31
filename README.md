@@ -47,6 +47,8 @@ console.log(dotty.get(object, "a.b.x")); // "y"
 console.log(dotty.get(object, ["a", "b", "x"])); // "y"
 console.log(dotty.get(object, "a.b.z")); // undefined
 console.log(dotty.get(object, ["a", "b", "z"])); // undefined
+console.log(dotty.get(object, ["a", "b", "x", "<<", "c", "x"])); // "z"
+console.log(dotty.get(object, "a.b.x.<<.c.x")); // "z"
 
 dotty.put(object, "a.b.hello", "hi");
 dotty.put(object, ["a", "c", "yo"], "sup");

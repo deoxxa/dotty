@@ -19,7 +19,7 @@
     "mongodb"
   ],
   "author": "Conrad Pankoff <deoxxa@fknsrs.biz> (http://www.fknsrs.biz/)",
-  "license": "BSD",
+  "license": "BSD-3-Clause",
   "devDependencies": {
     "vows": "~0.7.0",
     "docco": "~0.6.2"

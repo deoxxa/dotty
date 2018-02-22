@@ -1,6 +1,6 @@
 {
   "name": "dotty",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Access properties of nested objects using dot-path notation",
   "main": "lib/index.js",
   "scripts": {

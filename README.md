@@ -1,25 +1,19 @@
-Dotty [![build status](https://secure.travis-ci.org/deoxxa/dotty.png)](http://travis-ci.org/deoxxa/dotty) [![npm](https://img.shields.io/npm/v/dotty.svg)](https://www.npmjs.com/package/dotty)
-=====
+# Dotty ![Build and Test](https://github.com/deoxxa/dotty/workflows/Build%20and%20Test/badge.svg) [![npm](https://img.shields.io/npm/v/dotty.svg)](https://www.npmjs.com/package/dotty)
 
 Access properties of nested objects using dot-path notation.
 
-Overview
---------
+## Overview
 
 Dotty makes it easy to programmatically access arbitrarily nested objects and
 their properties.
 
-
-Installation
-------------
+## Installation
 
 Here's a link to the [npm](https://npmjs.org/package/dotty) page.
 
-	npm install dotty
+    npm install dotty
 
-
-Usage
------
+## Usage
 
 Also see the [documentation](http://deoxxa.github.com/dotty/docs/) and
 [example](example.js).
@@ -56,30 +50,30 @@ console.log(dotty.search(object, ["a", "b", "*"]));
 console.log(dotty.search(object, "a.*.x"));
 console.log(dotty.search(object, ["a", "*", "x"]));
 console.log(dotty.search(object, ["a", "*", /..+/]));
-console.log(dotty.search(object, 'a.b.*', function(value, parent, key){
-	parent[key] = value + '!';
-}));
+console.log(
+  dotty.search(object, "a.b.*", function (value, parent, key) {
+    parent[key] = value + "!";
+  })
+);
 
 console.log(dotty.remove(object, "a.b.x"));
 console.log(dotty.remove(object, "a.b.y"));
 
-console.log(dotty.removeSearch(object, 'a.*.x'));
+console.log(dotty.removeSearch(object, "a.*.x"));
 
 console.log(dotty.deepKeys(object));
-console.log(dotty.deepKeys(object, {leavesOnly: true}));
-console.log(dotty.deepKeys(object, {leavesOnly: true, asStrings: true}));
+console.log(dotty.deepKeys(object, { leavesOnly: true }));
+console.log(dotty.deepKeys(object, { leavesOnly: true, asStrings: true }));
 
 console.log(object);
 ```
 
-License
--------
+## License
 
 3-clause BSD. A copy is included with the source.
 
-Contact
--------
+## Contact
 
-* GitHub ([http://github.com/deoxxa](deoxxa))
-* Twitter ([http://twitter.com/deoxxa](@deoxxa))
-* Email ([mailto:deoxxa@fknsrs.biz](deoxxa@fknsrs.biz))
+- GitHub ([http://github.com/deoxxa](deoxxa))
+- Twitter ([http://twitter.com/deoxxa](@deoxxa))
+- Email ([mailto:deoxxa@fknsrs.biz](deoxxa@fknsrs.biz))

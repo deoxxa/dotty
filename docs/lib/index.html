@@ -50,7 +50,7 @@ for existence of.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> exists = <span class="hljs-built_in">module</span>.exports.exists = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">exists</span>(<span class="hljs-params">object, path</span>) </span>{
+<span class="hljs-keyword">var</span> exists = (<span class="hljs-built_in">module</span>.exports.exists = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">exists</span>(<span class="hljs-params">object, path</span>) </span>{
   <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> path === <span class="hljs-string">"string"</span>) {
     path = path.split(<span class="hljs-string">"."</span>);
   }
@@ -72,7 +72,7 @@ for existence of.</p>
   } <span class="hljs-keyword">else</span> {
     <span class="hljs-keyword">return</span> exists(object[key], path);
   }
-};</pre></div></div>
+});</pre></div></div>
             
         </li>
         
@@ -86,14 +86,14 @@ for existence of.</p>
               <p>These arguments are the same as those for <code>exists</code>.</p>
 <p>The return value, however, is the property you’re trying to access, or
 <code>undefined</code> if it can’t be found. This means you won’t be able to tell
-the difference between an unresolved path and an undefined property, so you 
+the difference between an unresolved path and an undefined property, so you
 should not use <code>get</code> to check for the existence of a property. Use <code>exists</code>
 instead.</p>
 
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> get = <span class="hljs-built_in">module</span>.exports.get = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get</span>(<span class="hljs-params">object, path</span>) </span>{
+<span class="hljs-keyword">var</span> get = (<span class="hljs-built_in">module</span>.exports.get = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">get</span>(<span class="hljs-params">object, path</span>) </span>{
   <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> path === <span class="hljs-string">"string"</span>) {
     path = path.split(<span class="hljs-string">"."</span>);
   }
@@ -117,7 +117,7 @@ instead.</p>
   <span class="hljs-keyword">if</span> (path.length) {
     <span class="hljs-keyword">return</span> get(object[key], path);
   }
-};</pre></div></div>
+});</pre></div></div>
             
         </li>
         
@@ -139,7 +139,7 @@ match. Action params are value, parent and key.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> search = <span class="hljs-built_in">module</span>.exports.search = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">search</span>(<span class="hljs-params">object, path, action</span>) </span>{
+<span class="hljs-keyword">var</span> search = (<span class="hljs-built_in">module</span>.exports.search = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">search</span>(<span class="hljs-params">object, path, action</span>) </span>{
   <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> path === <span class="hljs-string">"string"</span>) {
     path = path.split(<span class="hljs-string">"."</span>);
   }
@@ -165,17 +165,26 @@ match. Action params are value, parent and key.</p>
   }
 
   <span class="hljs-keyword">if</span> (path.length === <span class="hljs-number">0</span>) {
-    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(object).filter(key.test.bind(key)).map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">k</span>) </span>{
-      <span class="hljs-keyword">var</span> value = object[k];
-      <span class="hljs-keyword">if</span>(action){
-        action(value, object, k);
-      }
-      <span class="hljs-keyword">return</span> value;
-    });
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Object</span>.keys(object)
+      .filter(key.test.bind(key))
+      .map(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k</span>) </span>{
+        <span class="hljs-keyword">var</span> value = object[k];
+        <span class="hljs-keyword">if</span> (action) {
+          action(value, object, k);
+        }
+        <span class="hljs-keyword">return</span> value;
+      });
   } <span class="hljs-keyword">else</span> {
-    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Array</span>.prototype.concat.apply([], <span class="hljs-built_in">Object</span>.keys(object).filter(key.test.bind(key)).map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">k</span>) </span>{ <span class="hljs-keyword">return</span> search(object[k], path, action); }));
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">Array</span>.prototype.concat.apply(
+      [],
+      <span class="hljs-built_in">Object</span>.keys(object)
+        .filter(key.test.bind(key))
+        .map(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">k</span>) </span>{
+          <span class="hljs-keyword">return</span> search(object[k], path, action);
+        })
+    );
   }
-};</pre></div></div>
+});</pre></div></div>
             
         </li>
         
@@ -192,12 +201,15 @@ The return value is the same object argument with modifications.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> removeSearch = <span class="hljs-built_in">module</span>.exports.removeSearch = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">removeSearch</span>(<span class="hljs-params">object, path</span>)</span>{
-  search(object, path, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">value, object, key</span>)</span>{
+<span class="hljs-keyword">var</span> removeSearch = (<span class="hljs-built_in">module</span>.exports.removeSearch = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">removeSearch</span>(<span class="hljs-params">
+  object,
+  path
+</span>) </span>{
+  search(object, path, <span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">value, object, key</span>) </span>{
     <span class="hljs-keyword">delete</span> object[key];
   });
   <span class="hljs-keyword">return</span> object;
-};</pre></div></div>
+});</pre></div></div>
             
         </li>
         
@@ -219,7 +231,7 @@ successfully, or <code>false</code> otherwise.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> put = <span class="hljs-built_in">module</span>.exports.put = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">put</span>(<span class="hljs-params">object, path, value</span>) </span>{
+<span class="hljs-keyword">var</span> put = (<span class="hljs-built_in">module</span>.exports.put = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">put</span>(<span class="hljs-params">object, path, value</span>) </span>{
   <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> path === <span class="hljs-string">"string"</span>) {
     path = path.split(<span class="hljs-string">"."</span>);
   }
@@ -227,15 +239,14 @@ successfully, or <code>false</code> otherwise.</p>
   <span class="hljs-keyword">if</span> (!(path <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Array</span>) || path.length === <span class="hljs-number">0</span>) {
     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
   }
-  
+
   path = path.slice();
 
   <span class="hljs-keyword">var</span> key = path.shift();
 
-  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> object !== <span class="hljs-string">"object"</span> || object === <span class="hljs-literal">null</span>) {
+  <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> object !== <span class="hljs-string">"object"</span> || object === <span class="hljs-literal">null</span> || key === <span class="hljs-string">"__proto__"</span>) {
     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
   }
-
   <span class="hljs-keyword">if</span> (path.length === <span class="hljs-number">0</span>) {
     object[key] = value;
   } <span class="hljs-keyword">else</span> {
@@ -249,7 +260,7 @@ successfully, or <code>false</code> otherwise.</p>
 
     <span class="hljs-keyword">return</span> put(object[key], path, value);
   }
-};</pre></div></div>
+});</pre></div></div>
             
         </li>
         
@@ -267,7 +278,7 @@ successfully, or <code>false</code> otherwise.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> remove = <span class="hljs-built_in">module</span>.exports.remove = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">remove</span>(<span class="hljs-params">object, path, value</span>) </span>{
+<span class="hljs-keyword">var</span> remove = (<span class="hljs-built_in">module</span>.exports.remove = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">remove</span>(<span class="hljs-params">object, path, value</span>) </span>{
   <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> path === <span class="hljs-string">"string"</span>) {
     path = path.split(<span class="hljs-string">"."</span>);
   }
@@ -275,7 +286,7 @@ successfully, or <code>false</code> otherwise.</p>
   <span class="hljs-keyword">if</span> (!(path <span class="hljs-keyword">instanceof</span> <span class="hljs-built_in">Array</span>) || path.length === <span class="hljs-number">0</span>) {
     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
   }
-  
+
   path = path.slice();
 
   <span class="hljs-keyword">var</span> key = path.shift();
@@ -295,7 +306,7 @@ successfully, or <code>false</code> otherwise.</p>
   } <span class="hljs-keyword">else</span> {
     <span class="hljs-keyword">return</span> remove(object[key], path, value);
   }
-};</pre></div></div>
+});</pre></div></div>
             
         </li>
         
@@ -318,7 +329,11 @@ format. If you want them in dot-notation format, do something like this:</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>
-<span class="hljs-keyword">var</span> deepKeys = <span class="hljs-built_in">module</span>.exports.deepKeys = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">deepKeys</span>(<span class="hljs-params">object, options, prefix</span>) </span>{
+<span class="hljs-keyword">var</span> deepKeys = (<span class="hljs-built_in">module</span>.exports.deepKeys = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">deepKeys</span>(<span class="hljs-params">
+  object,
+  options,
+  prefix
+</span>) </span>{
   options = options || {};
 
   <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> prefix === <span class="hljs-string">"undefined"</span>) {
@@ -337,16 +352,24 @@ format. If you want them in dot-notation format, do something like this:</p>
     }
 
     <span class="hljs-keyword">if</span> (<span class="hljs-keyword">typeof</span> object[k] === <span class="hljs-string">"object"</span> &amp;&amp; object[k] !== <span class="hljs-literal">null</span>) {
-      keys = keys.concat(deepKeys(object[k], {<span class="hljs-attr">leavesOnly</span>: options.leavesOnly}, prefix.concat([k])));
+      keys = keys.concat(
+        deepKeys(
+          object[k],
+          { <span class="hljs-attr">leavesOnly</span>: options.leavesOnly },
+          prefix.concat([k])
+        )
+      );
     }
   }
 
   <span class="hljs-keyword">if</span> (options.asStrings) {
-    keys = keys.map(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">e</span>) </span>{ <span class="hljs-keyword">return</span> e.join(<span class="hljs-string">"."</span>); });
+    keys = keys.map(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">e</span>) </span>{
+      <span class="hljs-keyword">return</span> e.join(<span class="hljs-string">"."</span>);
+    });
   }
 
   <span class="hljs-keyword">return</span> keys;
-};</pre></div></div>
+});</pre></div></div>
             
         </li>
         

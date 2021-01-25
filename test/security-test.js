@@ -12,7 +12,6 @@ vows
         return obj;
       },
       "it should not update": function (res) {
-        // assert.equal(res.__proto__.polluted, undefined);
         assert.equal(res.polluted, undefined);
       },
     },
@@ -23,7 +22,6 @@ vows
         return obj;
       },
       "it should not update": function (res) {
-        // assert.equal(res.__proto__.polluted, undefined);
         assert.equal(res.polluted, undefined);
       },
     },

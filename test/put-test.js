@@ -26,6 +26,15 @@ vows
           assert.equal(res.a, "b");
         },
       },
+      "returns true": {
+        topic: (function () {
+          var res = dotty.put({}, ["a"], "b");
+          return res;
+        })(),
+        "should set the correct value": function (res) {
+          assert.equal(res, true);
+        },
+      },
     },
     "A two-level path": {
       "as a string": {

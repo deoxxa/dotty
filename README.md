@@ -15,7 +15,7 @@ Here's a link to the [npm](https://npmjs.org/package/dotty) page.
 
 ## Usage
 
-Also see the [documentation](http://deoxxa.github.com/dotty/docs/) and
+Also see the [documentation](http://deoxxa.github.io/dotty/docs/) and
 [example](example.js).
 
 ```javascript
@@ -74,6 +74,6 @@ console.log(object);
 
 ## Contact
 
-- GitHub ([http://github.com/deoxxa](deoxxa))
-- Twitter ([http://twitter.com/deoxxa](@deoxxa))
-- Email ([mailto:deoxxa@fknsrs.biz](deoxxa@fknsrs.biz))
+- GitHub ([deoxxa](https://github.com/deoxxa))
+- Twitter ([@deoxxa](https://twitter.com/deoxxa))
+- Email ([deoxxa@fknsrs.biz](mailto:deoxxa@fknsrs.biz))

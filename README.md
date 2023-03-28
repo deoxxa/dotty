@@ -15,7 +15,7 @@ Here's a link to the [npm](https://npmjs.org/package/dotty) page.
 
 ## Usage
 
-Also see the [documentation](http://deoxxa.github.io/dotty/docs/) and
+Also see the [documentation](https://deoxxa.github.io/dotty/docs/) and
 [example](example.js).
 
 ```javascript
